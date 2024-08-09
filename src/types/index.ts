@@ -1,9 +1,15 @@
-export type PaymentType = 'online' | 'offline';
+export type PaymentType = 'online' | 'offline' | null;
 
-export type IItemCategory = 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
+export enum IItemCategory {
+  'софт-скил' = 'soft',
+  'другое' = 'other',
+  'дополнительное' = 'additional',
+  'кнопка' = 'button',
+  'хард-скил' = 'hard'
+}
 
 export interface IItem {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   category: IItemCategory;
@@ -16,14 +22,8 @@ export interface IOrder {
   payment: PaymentType;
   email: string;
   phone: string;
-}
-
-export interface IBasket {
   items: IItem[];
   total: number | null;
-  addItem(item: IItem): void;
-  removeItem(id: string): void;
-  resetBasket(): void;
 }
 
 export interface ICatalog {
@@ -33,18 +33,23 @@ export interface ICatalog {
 }
 
 export interface IOrderData {
+  addItem(item: IItem): void;
+  removeItem(id: string): void;
   setOrderInfo(orderData: IOrder): void;
-  checkOrderValidation(orderData: Record<keyof TOrederInfo, string>): boolean;
+  checkOrderValidation(orderData: Record<keyof TOrderInfo, string>): boolean;
   resetInfo(): void;
+}
+
+export interface IOrderResult {
+	id: string;
+	total: number;
 }
 
 export type TItemInfo = Pick<IItem, 'title' | 'description' | 'category' | 'image' | 'price'>;
 
 export type TBasketItemInfo = Pick<IItem, 'title' | 'price'>;
 
-export type TOrederInfo = Pick<IOrder, 'email' | 'phone' | 'payment' | 'address'>;
-
-export type TSuccessOrder = Pick<IBasket, 'total'>;
+export type TOrderInfo = Pick<IOrder, 'address' | 'payment' | 'email' | 'phone'>;
 
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 

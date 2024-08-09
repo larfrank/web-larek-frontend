@@ -20,7 +20,7 @@ export class Catalog implements ICatalog {
     }
 
     getItem(id: string): IItem {
-        return this._items.find(item => item._id === id);
+        return this._items.find(item => item.id === id);
     }
 
     set preview(itemId: string | null) {
