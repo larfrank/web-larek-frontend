@@ -1,4 +1,3 @@
-import { IOrder } from "../../types";
 import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 
@@ -6,7 +5,7 @@ interface ISuccessActions {
 	onClick: () => void;
 }
 
-export class SuccessView extends Component<Partial<IOrder>> {
+export class SuccessView extends Component<unknown> {
 	protected _total: HTMLElement;
 	protected successButton: HTMLButtonElement;
 

@@ -2,18 +2,11 @@ import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IEvents } from "../base/events";
 
-interface IPageView {
-	catalog: HTMLElement;
-	totalCount: number;
-	wrapperLocked: boolean;
-	basketButton: HTMLButtonElement;
-}
-
 interface IPageActions {
 	onClick: () => void;
 }
 
-export class PageView extends Component<IPageView> {
+export class PageView extends Component<unknown> {
     protected _catalog: HTMLElement;
 	protected _totalCount: HTMLSpanElement;
 	protected _wrapperLocked: HTMLElement;
