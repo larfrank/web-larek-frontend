@@ -228,6 +228,7 @@ export type TSuccessOrder = Pick<IBasket, 'total'>
 События, возникающие при взаимодействии пользователя с интерфейсом (генерируются классами, отвечающими за представление):
 - `modal:open` - открытие модального окна;
 - `modal:close` - закрытие модального окна;
+- `preview:open` - открытие превью карточки;
 - `item:add-to-basket` - продукт добавлен в корзину;
 - `item:delete-from-basket` - продукт удален из корзины;
 - `basket:open` - открытие корзины;
@@ -235,7 +236,10 @@ export type TSuccessOrder = Pick<IBasket, 'total'>
 - `order:open` - открытие форма заказа;
 - `order.payment:change` - изменилось поле оплаты заказа;
 - `order.address:change` - изменилось поле адреса заказа;
-- `order.email:change` - изменилось поле почты заказа;
-- `order.phone:change` - изменилось поле телефона заказа;
+- `contacts.email:change` - изменилось поле почты заказа;
+- `contacts.phone:change` - изменилось поле телефона заказа;
+- `order:submit` - первая форма заказа корректно запонена;
+- `contacts:submit` - заказ корректно запонен;
 - `formErrors:change` - изменились ошибки;
-- `order:submit` - заказ корректно заполнен.
+- `order:clean` - заказ очищен.
+

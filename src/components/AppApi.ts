@@ -1,4 +1,4 @@
-import { IApi, IItem, IOrder, IOrderResult } from "../types";
+import { IApi, IItem, IOrder, IOrderResult } from '../types';
 
 type ApiListResponse<Type> = {
 	total: number;
@@ -31,12 +31,12 @@ export class AppApi implements IAppApi {
 	}
 
 	async postOrder(orderData: IOrder): Promise<IOrderResult> {
-		const payload = ({
-            ...orderData,
-            items: orderData.items.map(el => el.id)
-        })
-        
-        return await this._baseApi
+		const payload = {
+			...orderData,
+			items: orderData.items.map((el) => el.id),
+		};
+
+		return await this._baseApi
 			.post('/order', payload)
 			.then((data: IOrderResult) => data);
 	}

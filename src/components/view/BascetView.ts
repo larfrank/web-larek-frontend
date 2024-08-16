@@ -1,5 +1,5 @@
-import { createElement, ensureElement } from "../../utils/utils";
-import { Component } from "../base/Component";
+import { createElement, ensureElement } from '../../utils/utils';
+import { Component } from '../base/Component';
 
 interface IBasketActions {
 	onClick: () => void;
@@ -11,21 +11,24 @@ interface IBasketView {
 }
 
 export class BasketView extends Component<IBasketView> {
-    protected list: HTMLElement;
+	protected list: HTMLElement;
 	protected basketButton: HTMLButtonElement;
-    protected _total: HTMLElement;
+	protected _total: HTMLElement;
 
-    constructor(protected container: HTMLElement, actions: IBasketActions) {
+	constructor(protected container: HTMLElement, actions: IBasketActions) {
 		super(container);
 
 		this.list = ensureElement<HTMLElement>('.basket__list', this.container);
 		this._total = ensureElement<HTMLElement>('.basket__price', this.container);
-		this.basketButton = ensureElement<HTMLButtonElement>('.basket__button', this.container);
+		this.basketButton = ensureElement<HTMLButtonElement>(
+			'.basket__button',
+			this.container
+		);
 
 		this.basketButton.addEventListener('click', actions.onClick);
 	}
 
-    disabledBasketButton(valid: boolean) {
+	disabledBasketButton(valid: boolean) {
 		this.setDisabled(this.basketButton, valid);
 	}
 
@@ -47,9 +50,8 @@ export class BasketView extends Component<IBasketView> {
 		this.setText(this._total, `${String(total)} синапсов`);
 	}
 
-    // TODO: remove this one?
-	//render(data?: IBasketView) {
-		//if (!data) return this.container;
-		//return super.render({ items: data.items, total: data.total });
-	//}
+	render(data?: IBasketView) {
+		if (!data) return this.container;
+		return super.render({ items: data.items, total: data.total });
+	}
 }

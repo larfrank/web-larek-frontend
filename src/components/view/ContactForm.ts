@@ -1,5 +1,5 @@
-import { IEvents } from "../base/events";
-import { FormView } from "./FormView";
+import { IEvents } from '../base/events';
+import { FormView } from './FormView';
 
 export class ContactsView extends FormView {
 	constructor(container: HTMLFormElement, events: IEvents) {

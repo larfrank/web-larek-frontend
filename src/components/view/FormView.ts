@@ -1,7 +1,7 @@
-import { TOrderInfo } from "../../types";
-import { ensureElement } from "../../utils/utils";
-import { Component } from "../base/Component";
-import { IEvents } from "../base/events";
+import { TOrderInfo } from '../../types';
+import { ensureElement } from '../../utils/utils';
+import { Component } from '../base/Component';
+import { IEvents } from '../base/events';
 
 interface IFormView extends TOrderInfo {
 	valid: boolean;
@@ -15,8 +15,14 @@ export class FormView extends Component<IFormView> {
 	constructor(protected container: HTMLFormElement, protected events: IEvents) {
 		super(container);
 
-		this._formErrors = ensureElement<HTMLElement>('.form__errors', this.container);
-		this.submitButton = ensureElement<HTMLButtonElement>('.button[type=submit]', this.container);
+		this._formErrors = ensureElement<HTMLElement>(
+			'.form__errors',
+			this.container
+		);
+		this.submitButton = ensureElement<HTMLButtonElement>(
+			'.button[type=submit]',
+			this.container
+		);
 
 		this.container.addEventListener('submit', (evt) => {
 			evt.preventDefault();
@@ -32,7 +38,9 @@ export class FormView extends Component<IFormView> {
 	}
 
 	protected onInputChanged(field: string, value: string) {
-		this.events.emit(`${this.container.name}.${field}:change`, {field, value});
+		this.events.emit(`${this.container.name}.${field}:change`, {
+			[field]: value,
+		});
 	}
 
 	set valid(value: boolean) {
@@ -43,7 +51,7 @@ export class FormView extends Component<IFormView> {
 		this.setText(this._formErrors, value);
 	}
 
-	render(state: Partial<TOrderInfo> & IFormView) {
+	render(state: Partial<IFormView>) {
 		const { valid, formErrors, ...inputs } = state;
 		super.render({ valid, formErrors });
 		Object.assign(this, inputs);

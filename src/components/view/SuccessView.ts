@@ -1,5 +1,5 @@
-import { ensureElement } from "../../utils/utils";
-import { Component } from "../base/Component";
+import { ensureElement } from '../../utils/utils';
+import { Component } from '../base/Component';
 
 interface ISuccessActions {
 	onClick: () => void;
@@ -13,7 +13,10 @@ export class SuccessView extends Component<unknown> {
 		super(container);
 
 		this._total = ensureElement('.order-success__description', this.container);
-		this.successButton = ensureElement<HTMLButtonElement>('.order-success__close', this.container);
+		this.successButton = ensureElement<HTMLButtonElement>(
+			'.order-success__close',
+			this.container
+		);
 
 		if (actions?.onClick) {
 			this.successButton.addEventListener('click', actions.onClick);

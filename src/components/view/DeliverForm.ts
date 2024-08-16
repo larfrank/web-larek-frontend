@@ -1,9 +1,9 @@
-import { TOrderInfo } from "../../types";
-import { ensureAllElements } from "../../utils/utils";
-import { IEvents } from "../base/events";
-import { FormView } from "./FormView";
+import { TOrderInfo } from '../../types';
+import { ensureAllElements } from '../../utils/utils';
+import { IEvents } from '../base/events';
+import { FormView } from './FormView';
 
-export class OrderView extends FormView {
+export class DeliverView extends FormView {
 	protected paymentButtons: HTMLButtonElement[];
 
 	constructor(protected container: HTMLFormElement, protected events: IEvents) {
@@ -24,7 +24,9 @@ export class OrderView extends FormView {
 	}
 
 	protected onPaymentChange(value: string, field: keyof TOrderInfo) {
-		this.events.emit(`${this.container.name}.${field}:change`, {field, value});
+		this.events.emit(`${this.container.name}.${field}:change`, {
+			[field]: value,
+		});
 	}
 
 	set selected(name: string) {
@@ -35,6 +37,7 @@ export class OrderView extends FormView {
 	}
 
 	set address(value: string) {
-		(this.container.elements.namedItem('address') as HTMLInputElement).value = value;
+		(this.container.elements.namedItem('address') as HTMLInputElement).value =
+			value;
 	}
 }
