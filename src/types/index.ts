@@ -35,7 +35,7 @@ export interface ICatalog {
 export interface IOrderData {
 	addItem(item: IItem): void;
 	removeItem(id: string): void;
-	setOrderInfo(orderData: IOrder): void;
+	setOrderInfo(orderData: Partial<IOrder>): void;
 	getOrderInfo(): IOrder;
 	checkOrderValidation(): void;
 	resetInfo(success: boolean): void;

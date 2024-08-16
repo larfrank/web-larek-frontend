@@ -103,7 +103,7 @@ export interface ICatalog {
 export interface IOrderData {
 	addItem(item: IItem): void;
 	removeItem(id: string): void;
-	setOrderInfo(orderData: IOrder): void;
+	setOrderInfo(orderData: Partial<IOrder>): void;
 	getOrderInfo(): IOrder;
 	checkOrderValidation(): void;
 	resetInfo(success: boolean): void;
@@ -276,7 +276,7 @@ export interface IApi {
 - `render(state: Partial<IFormView>)` - собирает и возвращает контейнер с формой;
 - а также сеттеры для изменения активности кнопки и размещения текста ошибок.
 
-#### Класс SuccessOrder
+#### Класс SuccessView
 Класс расширяет Сomponent и предназначен для реализации отображения успешной оплаты заказа. Получает данные суммы списания, которые нужно отобразить.
 
 Конструктор принимает HTMLElement контейнера, по которому в разметке страницы будет идентифицирован темплейт и колбек-функцию для возможности инициации событий.
@@ -312,6 +312,7 @@ export interface IApi {
 - `preview:open` - открытие превью карточки;
 - `item:add-to-basket` - продукт добавлен в корзину;
 - `item:delete-from-basket` - продукт удален из корзины;
+- `item:delete-from-basket-itself` - продукт удален из корзины (удаляем, находясь в интерфейсе корзины);
 - `order:open` - открытие форма заказа;
 - `order.payment:change` - изменилось поле оплаты заказа;
 - `order.address:change` - изменилось поле адреса заказа;
@@ -322,3 +323,4 @@ export interface IApi {
 - `formErrors:change` - изменились ошибки;
 - `order:clean` - заказ очищен.
 
+Названия некоторых из приведенных событий получаются из совмещений атрибутов DOM-элементов и их конкретной части, а также типа события. Один из таких примеров - это событие "order.payment:change".
