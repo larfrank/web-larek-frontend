@@ -52,13 +52,6 @@ export interface IOrderResult {
 	total: number;
 }
 
-export type TItemInfo = Pick<
-	IItem,
-	'title' | 'description' | 'category' | 'image' | 'price'
->;
-
-export type TBasketItemInfo = Pick<IItem, 'title' | 'price'>;
-
 export type TOrderInfo = Pick<
 	IOrder,
 	'address' | 'payment' | 'email' | 'phone'
