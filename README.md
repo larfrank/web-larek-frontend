@@ -104,6 +104,7 @@ export interface IOrderData {
 	addItem(item: IItem): void;
 	removeItem(id: string): void;
 	setOrderInfo(orderData: IOrder): void;
+	getOrderInfo(): IOrder;
 	checkOrderValidation(): void;
 	resetInfo(success: boolean): void;
 }
@@ -206,7 +207,8 @@ export interface IApi {
 - `events: IEvents` - экземпляр класса `EventEmitter` для инициации событий при изменении данных.
 
 Так же класс предоставляет набор методов для взаимодействия с этими данными, а именно:
-- `setOrderInfo(orderData: IOrder): void` - устанавливает данные заказа;
+- `setOrderInfo(orderData: Partial<IOrder>): void` - устанавливает данные заказа;
+- `getOrderInfo(): IOrder` - предоставляет данные для отправки заказа на бэкенд;
 - `checkOrderValidation(): void` - проверяет данные заказа на валидность;
 - `resetInfo(success: boolean): void` - очищает данные заказа;
 - `addItem(item: IItem): void` - добавляет товар в корзину и вызывает событие изменения массива;
@@ -261,7 +263,7 @@ export interface IApi {
 #### Класс FormView
 Данный класс предназначен для реализации формы. Наследуется от базового класса Сomponent.
 
-От данного класса наследуются `DeliverForm` и `ContactForm`, работающие с конкретными полями формы.
+От данного класса наследуются `DeliverView` и `ContactsView`, работающие с конкретными полями формы.
 
 При сабмите инициирует событие передавая в него объект с данными из полей ввода формы. При изменении данных в полях ввода инициирует событие изменения данных. Предоставляет методы для отображения ошибок и управления активностью кнопки сохранения.
 
@@ -301,7 +303,6 @@ export interface IApi {
 
 События изменения данных (генерируются классами моделями данных):
 - `basket:changed` - корзина изменилась;
-- `orderData:changed` - данные о заказе изменились;
 - `initialData:loaded` - данные генерируемые при инициализации страницы;
 - `item:selected` - изменение открываемой в модальном окне картинки карточки;
 
@@ -311,7 +312,6 @@ export interface IApi {
 - `preview:open` - открытие превью карточки;
 - `item:add-to-basket` - продукт добавлен в корзину;
 - `item:delete-from-basket` - продукт удален из корзины;
-- `basket:change` - корзина изменилась;
 - `order:open` - открытие форма заказа;
 - `order.payment:change` - изменилось поле оплаты заказа;
 - `order.address:change` - изменилось поле адреса заказа;
