@@ -121,6 +121,15 @@ export interface IFormErrors {
 }
 ```
 
+Данные для событий корзины
+
+```
+export interface IEventObject {
+	item: IItem;
+	inBasket: boolean;
+}
+```
+
 Данные ответа с бэкенда
 
 ```
@@ -309,10 +318,10 @@ export interface IApi {
 События, возникающие при взаимодействии пользователя с интерфейсом (генерируются классами, отвечающими за представление):
 - `modal:open` - открытие модального окна;
 - `modal:close` - закрытие модального окна;
+- `basket:open` - открытие корзины;
 - `preview:open` - открытие превью карточки;
 - `item:add-to-basket` - продукт добавлен в корзину;
 - `item:delete-from-basket` - продукт удален из корзины;
-- `item:delete-from-basket-itself` - продукт удален из корзины (удаляем, находясь в интерфейсе корзины);
 - `order:open` - открытие форма заказа;
 - `order.payment:change` - изменилось поле оплаты заказа;
 - `order.address:change` - изменилось поле адреса заказа;

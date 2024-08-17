@@ -48,6 +48,11 @@ export interface IFormErrors {
 	phone: string;
 }
 
+export interface IEventObject {
+	item: IItem;
+	inBasket: boolean;
+}
+
 export interface IOrderResult {
 	id: string;
 	total: number;

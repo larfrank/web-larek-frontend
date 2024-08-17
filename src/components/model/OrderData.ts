@@ -18,6 +18,10 @@ export class OrderData implements IOrderData {
 	protected _formErrors: IFormErrors;
 
 	constructor(events: IEvents) {
+		this.address = '';
+		this.email = '';
+		this.payment = null;
+		this.phone = '';
 		this.events = events;
 		this._items = [];
 		this._total = 0;

@@ -2,7 +2,7 @@ import './scss/styles.scss';
 import { Catalog } from './components/model/Catalog';
 import { OrderData } from './components/model/OrderData';
 import { EventEmitter } from './components/base/events';
-import { IApi, IFormErrors, IItem, IOrder } from './types';
+import { IApi, IEventObject, IFormErrors, IItem, IOrder } from './types';
 import { Api } from './components/base/api';
 import { API_URL, CDN_URL, settings } from './utils/constants';
 import { AppApi } from './components/AppApi';
@@ -37,7 +37,7 @@ const orderFormElement = ensureElement<HTMLTemplateElement>('#order');
 const successFormElement = ensureElement<HTMLTemplateElement>('#success');
 
 const page = new PageView(pageElement, events, {
-	onClick: () => events.emit('basket:changed'),
+	onClick: () => events.emit('basket:open'),
 });
 const modal = new ModalView(modalElement, events);
 const basket = new BasketView(cloneTemplate(basketElement), {
@@ -79,7 +79,10 @@ events.on('preview:open', (item: IItem) => {
 				if (!orderData.isInBasket(item.id)) {
 					events.emit('item:add-to-basket', item);
 				} else {
-					events.emit('item:delete-from-basket', item);
+					events.emit(
+						'item:delete-from-basket',
+						{item: item, inBasket: false}
+					);
 				}
 			},
 		}
@@ -102,26 +105,31 @@ events.on('preview:open', (item: IItem) => {
 
 events.on('item:add-to-basket', (item: IItem) => {
 	orderData.addItem(item);
-	page.totalCount = orderData.items.length;
-	modal.close();
-});
-
-events.on('item:delete-from-basket', (item: IItem) => {
-	orderData.removeItem(item.id);
-	page.totalCount = orderData.items.length;
-	modal.close();
-});
-
-events.on('item:delete-from-basket-itself', (item: IItem) => {
-	orderData.removeItem(item.id);
-	page.totalCount = orderData.items.length;
 	events.emit('basket:changed');
+	modal.close();
 });
+
+events.on('item:delete-from-basket', (obj: IEventObject) => {
+	orderData.removeItem(obj.item.id);
+	events.emit('basket:changed');
+	if (!obj.inBasket) {
+		modal.close();
+	}
+});
+
+events.on('basket:open', () => {
+	modal.render({
+		content:basket.render()
+	})
+})
 
 events.on('basket:changed', () => {
 	const items = orderData.items.map((item, index) => {
 		const cardBasket = new CardBasket(cloneTemplate(cardBasketElement), {
-			onClick: () => events.emit('item:delete-from-basket-itself', item),
+			onClick: () => events.emit(
+				'item:delete-from-basket',
+				{item: item, inBasket: true}
+			),
 		});
 
 		return cardBasket.render({
@@ -131,6 +139,8 @@ events.on('basket:changed', () => {
 			index: index + 1,
 		});
 	});
+
+	page.totalCount = orderData.items.length;
 
 	modal.render({
 		content: basket.render({ items: items, total: orderData.total }),
