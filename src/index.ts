@@ -2,7 +2,7 @@ import './scss/styles.scss';
 import { Catalog } from './components/model/Catalog';
 import { OrderData } from './components/model/OrderData';
 import { EventEmitter } from './components/base/events';
-import { IApi, IEventObject, IFormErrors, IItem, IOrder } from './types';
+import { IApi, IFormErrors, IItem, IOrder } from './types';
 import { Api } from './components/base/api';
 import { API_URL, CDN_URL, settings } from './utils/constants';
 import { AppApi } from './components/AppApi';
@@ -79,10 +79,8 @@ events.on('preview:open', (item: IItem) => {
 				if (!orderData.isInBasket(item.id)) {
 					events.emit('item:add-to-basket', item);
 				} else {
-					events.emit(
-						'item:delete-from-basket',
-						{item: item, inBasket: false}
-					);
+					events.emit('item:delete-from-basket', item);
+					modal.close();
 				}
 			},
 		}
@@ -109,12 +107,9 @@ events.on('item:add-to-basket', (item: IItem) => {
 	modal.close();
 });
 
-events.on('item:delete-from-basket', (obj: IEventObject) => {
-	orderData.removeItem(obj.item.id);
+events.on('item:delete-from-basket', (item: IItem) => {
+	orderData.removeItem(item.id);
 	events.emit('basket:changed');
-	if (!obj.inBasket) {
-		modal.close();
-	}
 });
 
 events.on('basket:open', () => {
@@ -126,10 +121,7 @@ events.on('basket:open', () => {
 events.on('basket:changed', () => {
 	const items = orderData.items.map((item, index) => {
 		const cardBasket = new CardBasket(cloneTemplate(cardBasketElement), {
-			onClick: () => events.emit(
-				'item:delete-from-basket',
-				{item: item, inBasket: true}
-			),
+			onClick: () => events.emit('item:delete-from-basket', item),
 		});
 
 		return cardBasket.render({

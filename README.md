@@ -121,15 +121,6 @@ export interface IFormErrors {
 }
 ```
 
-Данные для событий корзины
-
-```
-export interface IEventObject {
-	item: IItem;
-	inBasket: boolean;
-}
-```
-
 Данные ответа с бэкенда
 
 ```
